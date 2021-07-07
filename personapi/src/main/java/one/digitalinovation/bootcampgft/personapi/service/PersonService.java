@@ -39,4 +39,10 @@ public class PersonService {
 				.map(personMapper::toDTO)
 				.get();
 	}
+
+
+	
+	public void deleteById(Long id) throws Exception {
+		personRepository.deleteById(id);
+	}
 }
