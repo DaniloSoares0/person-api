@@ -1,6 +1,7 @@
 package one.digitalinovation.bootcampgft.personapi.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +24,14 @@ import one.digitalinovation.bootcampgft.personapi.service.PersonService;
 @AllArgsConstructor
 @RequestMapping("/api/v1/people")
 public class PersonController {
-	
+
 	private PersonService personService;
-	
+
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serializable> createPerson(@RequestBody @Valid PersonDTO personDTO) {
 
 		try {
-			
+
 			return ResponseEntity.status(HttpStatus.CREATED)
 					.body(personService.createPerson(personDTO));
 
@@ -48,5 +50,11 @@ public class PersonController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body("Um erro ocorreu ao processar a solicitação");
 		}
+	}
+
+	@GetMapping
+	public ResponseEntity<List<PersonDTO>> listAll(){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(personService.listAll());
 	}
 }

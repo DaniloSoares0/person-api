@@ -1,5 +1,8 @@
 package one.digitalinovation.bootcampgft.personapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
@@ -19,8 +22,16 @@ public class PersonService {
 		this.personRepository = personRepository;
 	}
 
+	
 	public Person createPerson(PersonDTO personDTO) throws Exception {
 		return personRepository.save(personMapper.toModel(personDTO));
+	}
+
+	public List<PersonDTO> listAll() {
+		return personRepository.findAll()
+				.stream()
+				.map(personMapper::toDTO)
+				.collect(Collectors.toList());
 	}
 	
 }
