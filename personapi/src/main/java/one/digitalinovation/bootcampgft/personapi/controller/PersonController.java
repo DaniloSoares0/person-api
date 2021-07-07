@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import one.digitalinovation.bootcampgft.personapi.model.Person;
+import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
 import one.digitalinovation.bootcampgft.personapi.service.PersonService;
 
 @RestController
@@ -26,12 +26,12 @@ public class PersonController {
 	private PersonService personService;
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Serializable> createPerson(@RequestBody @Valid Person person) {
+	public ResponseEntity<Serializable> createPerson(@RequestBody @Valid PersonDTO personDTO) {
 
 		try {
 			
 			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(personService.createPerson(person));
+					.body(personService.createPerson(personDTO));
 
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 spring:
  datasource:
-        url: jdbc:h2:mem:elotech_db
+        url: jdbc:h2:mem:gft_db
         driverClassName: org.h2.Driver
         username: sa
         password:

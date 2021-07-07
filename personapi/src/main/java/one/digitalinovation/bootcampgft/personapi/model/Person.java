@@ -2,6 +2,7 @@ package one.digitalinovation.bootcampgft.personapi.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,13 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.CreatedDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -29,7 +28,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "person")
-@EqualsAndHashCode(of = "id")
 public class Person implements Serializable{
 	
 	private static final long serialVersionUID = 7358912459265900699L;
@@ -44,14 +42,14 @@ public class Person implements Serializable{
 	@Column(name ="last_name", nullable = false)
 	private String lastName;
 	
-	@CPF
 	@Column(name ="cpf",nullable = false, unique = true)
 	private String cpf;
 	
+	@Column(name ="data_nascimento")
 	private LocalDate birthDate;
 	
-	@OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
-	private List<Phone> phones;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Phone> phones = new ArrayList<>();
 	
 	@CreatedDate
 	@Column(name = "created_at")
