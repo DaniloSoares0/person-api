@@ -21,7 +21,7 @@ public class PersonService {
 	public PersonService(PersonRepository personRepository) {
 		this.personRepository = personRepository;
 	}
-
+	
 	
 	public Person createPerson(PersonDTO personDTO) throws Exception {
 		return personRepository.save(personMapper.toModel(personDTO));
@@ -34,4 +34,9 @@ public class PersonService {
 				.collect(Collectors.toList());
 	}
 	
+	public PersonDTO findById(Long id) throws Exception{
+		return personRepository.findById(id)
+				.map(personMapper::toDTO)
+				.get();
+	}
 }

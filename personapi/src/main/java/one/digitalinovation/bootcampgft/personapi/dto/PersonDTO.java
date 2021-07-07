@@ -1,5 +1,6 @@
 package one.digitalinovation.bootcampgft.personapi.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonDTO {
+public class PersonDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
+import one.digitalinovation.bootcampgft.personapi.exception.PersonNotFoundException;
 import one.digitalinovation.bootcampgft.personapi.service.PersonService;
 
 @RestController
@@ -57,4 +59,21 @@ public class PersonController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(personService.listAll());
 	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<Serializable> findById(@PathVariable Long id){
+		
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(personService.findById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new PersonNotFoundException().getMessage());
+					
+		}
+		
+	}
+
+	
 }
