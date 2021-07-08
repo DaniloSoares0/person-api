@@ -8,6 +8,9 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -105,5 +109,13 @@ public class PersonController {
 				.body(personService.listAll());
 	}
 
-	
+	@GetMapping("/pesquisa")
+	public Page<PersonDTO> findPerson(@RequestBody PersonDTO personExample,
+			@RequestParam(name = "page" , defaultValue = "0") Integer page,
+			@RequestParam(name = "size" , defaultValue = "10") Integer size,
+			@RequestParam(name = "sortTarget" , defaultValue = "ASC") String sortTarget){
+
+		return personService.findByExample(personExample,
+				PageRequest.of(page, size, Sort.Direction.valueOf(sortTarget), "createdAt"));
+	}
 }

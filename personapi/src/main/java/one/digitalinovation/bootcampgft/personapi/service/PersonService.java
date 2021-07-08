@@ -3,6 +3,9 @@ package one.digitalinovation.bootcampgft.personapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -48,5 +51,9 @@ public class PersonService {
 		  return personRepository.save(personMapper.toModel(personDTO));
 	  else
 		  throw new PersonNotFoundException();
+	}
+
+	public Page<PersonDTO> findByExample(PersonDTO personExample, PageRequest pageOptions) {
+		return personRepository.findAll(Example.of(personMapper.toModel(personExample)), pageOptions).map(personMapper::toDTO);
 	}
 }

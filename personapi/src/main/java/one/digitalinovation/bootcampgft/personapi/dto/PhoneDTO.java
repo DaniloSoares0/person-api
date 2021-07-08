@@ -6,11 +6,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import one.digitalinovation.bootcampgft.personapi.enums.PhoneTypes;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PhoneDTO {
