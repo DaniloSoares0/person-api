@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
+import one.digitalinovation.bootcampgft.personapi.exception.PersonNotFoundException;
 import one.digitalinovation.bootcampgft.personapi.mapper.PersonMapper;
 import one.digitalinovation.bootcampgft.personapi.model.Person;
 import one.digitalinovation.bootcampgft.personapi.repository.PersonRepository;
@@ -22,7 +23,6 @@ public class PersonService {
 		this.personRepository = personRepository;
 	}
 	
-	
 	public Person createPerson(PersonDTO personDTO) throws Exception {
 		return personRepository.save(personMapper.toModel(personDTO));
 	}
@@ -38,5 +38,17 @@ public class PersonService {
 		return personRepository.findById(id)
 				.map(personMapper::toDTO)
 				.get();
+	}
+
+	public void deleteById(Long id) throws Exception {
+		personRepository.deleteById(id);
+	}
+
+	public Person update(PersonDTO personDTO) throws Exception {
+	
+	  if(personRepository.findById(personDTO.getId()).isPresent()) 
+		  return personRepository.save(personMapper.toModel(personDTO));
+	  else
+		  throw new PersonNotFoundException();
 	}
 }
