@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
@@ -23,20 +25,19 @@ public class PersonService {
 	
 	private final PersonMapper personMapper ;
 	
-
 	public Person createPerson(PersonDTO personDTO) throws Exception {
 		return personRepository.save(personMapper.toModel(personDTO));
 	}
 
 	public List<PersonDTO> listAll() {
-		return personRepository.findAll()
+		return personRepository.listAll()
 				.stream()
 				.map(personMapper::toDTO)
 				.collect(Collectors.toList());
 	}
 	
 	public PersonDTO findById(Long id) throws Exception{
-		return personRepository.findById(id)
+		return personRepository.searchUserById(id)
 				.map(personMapper::toDTO)
 				.get();
 	}
@@ -52,8 +53,10 @@ public class PersonService {
 	  else
 		  throw new PersonNotFoundException();
 	}
-
+	
+	@Transactional
 	public Page<PersonDTO> findByExample(PersonDTO personExample, PageRequest pageOptions) {
-		return personRepository.findAll(Example.of(personMapper.toModel(personExample)), pageOptions).map(personMapper::toDTO);
+		return personRepository.findAll(Example.of(personMapper.toModel(personExample)), pageOptions)
+				.map(personMapper::toDTO);
 	}
 }

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import one.digitalinovation.bootcampgft.personapi.dto.PersonDTO;
 import one.digitalinovation.bootcampgft.personapi.exception.PersonNotFoundException;
@@ -31,11 +33,13 @@ import one.digitalinovation.bootcampgft.personapi.service.PersonService;
 
 @RestController
 @AllArgsConstructor
+@Api(value = "Person")
 @RequestMapping("/api/v1/people")
 public class PersonController {
 
 	private PersonService personService;
-
+	
+	@ApiOperation(value = "Cria uma pessoa.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serializable> createPerson(@RequestBody @Valid PersonDTO personDTO) {
 
@@ -62,6 +66,7 @@ public class PersonController {
 	}
 
 	@GetMapping("{id}")
+	@ApiOperation(value = "Busca uma pessoa por id.")
 	public ResponseEntity<Serializable> findById(@PathVariable Long id){
 		
 		try {
@@ -77,6 +82,7 @@ public class PersonController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Deleta uma pessoa")
 	public ResponseEntity<Serializable> deleteById(@PathVariable Long id) {
 		try {
 			personService.deleteById(id);
@@ -89,6 +95,7 @@ public class PersonController {
 	}	
 
 	@PutMapping
+	@ApiOperation(value = "Atualiza uma pessoa.")
 	public ResponseEntity<Serializable> update(@RequestBody @Valid PersonDTO personDTO){
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
@@ -104,18 +111,20 @@ public class PersonController {
 	}
 
 	@GetMapping
+	@ApiOperation(value = "Lista pessoas.")
 	public ResponseEntity<List<PersonDTO>> listAll(){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(personService.listAll());
 	}
 
 	@GetMapping("/pesquisa")
+	@ApiOperation(value = "Lista pessoas com filtros e com paginação.")
 	public Page<PersonDTO> findPerson(@RequestBody PersonDTO personExample,
 			@RequestParam(name = "page" , defaultValue = "0") Integer page,
 			@RequestParam(name = "size" , defaultValue = "10") Integer size,
-			@RequestParam(name = "sortTarget" , defaultValue = "ASC") String sortTarget){
+			@RequestParam(name = "sortDirection" , defaultValue = "ASC") String sortDirection){
 
 		return personService.findByExample(personExample,
-				PageRequest.of(page, size, Sort.Direction.valueOf(sortTarget), "createdAt"));
+				PageRequest.of(page, size, Sort.Direction.valueOf(sortDirection), "createdAt"));
 	}
 }
