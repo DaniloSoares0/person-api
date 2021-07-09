@@ -20,7 +20,7 @@ http://localhost:8080/api/v1/people
 
 Spring Boot REST API - Documentation
 
-Url: http://localhost:8080/swagger-ui.html#/cliente-controller/saveUsingPOST
+Url: http://localhost:8080/swagger-ui.html#/
 
 ![alt text](https://github.com/DaniloSoares0/person-api/blob/dea63a40c30fa34347ea81ccfdbb32e76f220e17/personapi/src/main/resources/img/capturar1.JPG)
 
