@@ -18,4 +18,16 @@ Após executar o comando acima, basta apenas abrir o seguinte endereço e visual
 http://localhost:8080/api/v1/people
 ```
 
+Spring Boot REST API - Documentation
 
+Url: http://localhost:8080/swagger-ui.html#/cliente-controller/saveUsingPOST
+
+![alt text](https://github.com/DaniloSoares0/person-api/blob/0eb950afb243dfd8047bbf357903f2b1e309ceff/personapi/src/main/resources/img/capture1.JPG)
+
+![alt text](https://github.com/DaniloSoares0/person-api/blob/0eb950afb243dfd8047bbf357903f2b1e309ceff/personapi/src/main/resources/img/capturar2.JPG)
+
+Banco de dados em memória com as seguintes credenciais:
+
+Url: http://localhost:8080/h2-console/login.jsp
+
+![alt text](https://github.com/DaniloSoares0/person-api/blob/0eb950afb243dfd8047bbf357903f2b1e309ceff/personapi/src/main/resources/img/capture3.JPG)
